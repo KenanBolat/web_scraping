@@ -7,7 +7,6 @@ import os
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
-from PIL import ImageFilter
 
 URL = 'https://store.goc.gov.tr'
 DRIVER_PATH = './chromedriver'
