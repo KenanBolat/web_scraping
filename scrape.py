@@ -7,11 +7,12 @@ import os
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from PIL import ImageFilter
 
 URL = 'https://store.goc.gov.tr'
 DRIVER_PATH = './chromedriver'
 TINT_COLOR = (0, 0, 0)  # Black
-TRANSPARENCY = .25  # Degree of transparency, 0-100%
+TRANSPARENCY = .35  # Degree of transparency, 0-100%
 OPACITY = int(255 * TRANSPARENCY)
 
 
@@ -55,15 +56,16 @@ class Scrape(object):
         img = Image.open(img_file_name)
         draw = ImageDraw.Draw(img)
 
-        font = ImageFont.truetype("./fonts/roboto-mono-v22-latin-regular.ttf", 32)
+        font = ImageFont.truetype("./fonts/roboto-mono-v22-latin-regular.ttf", 50)
         text = f'GOC.STORE {test_mode} TEST {datetime.now().strftime("%Y%m%d-%H%M")}'
-        x, y = 350, 900
+        x, y = 5, 900
         w, h = font.getsize(text)
 
         overlay = Image.new('RGBA', img.size, TINT_COLOR + (0,))
         draw = ImageDraw.Draw(overlay)  # Create a context for drawing things on it.
         draw.rectangle((x, y, x + w, y + h), fill=TINT_COLOR + (OPACITY,))
-        draw.text((x, y), text, (255, 0, 255), font=font)
+        draw.text((x, y), text, (255, 255, 0), font=font)
+
         overlay = overlay.rotate(45)
         img = Image.alpha_composite(img, overlay)
         img = img.convert("RGB")  # Remove alpha for saving in jpg format.
